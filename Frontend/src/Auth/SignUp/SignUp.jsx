@@ -1,16 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const SignUp = () => {
-  // Get the current year
+  const navigate = useNavigate();
   const currentYear = new Date().getFullYear();
 
-  // Generate an array of years from 1990 to the current year
   const years = [];
   for (let year = 1990; year <= currentYear; year++) {
     years.push(year);
   }
 
-  // List of programs
   const programs = [
     // Core Engineering Branches
     "Mechanical Engineering",
@@ -66,7 +65,7 @@ const SignUp = () => {
     "Printing Technology",
   ];
 
-  // List of colleges
+
   const colleges = [
     "Kalyani Government Engineering College",
     "Government College of Engineering and Ceramic Technology",
@@ -94,30 +93,54 @@ const SignUp = () => {
     "NSHM College of Management and Technology",
   ];
 
+
+  const [formData, setFormData] = useState({
+    college: "",
+    program: "",
+    name: "",
+    year: "",
+    enrollment: "",
+    mobile: "",
+    email: "",
+    password: "",
+  });
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.id]: e.target.value,
+    });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const users = JSON.parse(localStorage.getItem("users")) || [];
+    const existingUser = users.find(user => user.email === formData.email);
+
+    if (existingUser) {
+      alert("User with this email already exists. Please sign in.");
+    } else {
+      users.push(formData);
+      localStorage.setItem("users", JSON.stringify(users));
+      alert("Registration successful! Please sign in.");
+      navigate('/signin');
+    }
+  };
+
   return (
     <div className="bg-gray-100 font-sans min-h-screen flex items-center justify-center mt-20">
       <div className="max-w-2xl mx-auto my-10 bg-white p-8 rounded-xl shadow-md">
         <h2 className="text-2xl font-semibold text-center text-gray-800 mb-6">
           Alumni Registration Form
         </h2>
-        <p className="text-center text-gray-500 mb-6">
-          Register below if you're a new user.
-        </p>
-
-        <form>
+        <form onSubmit={handleSubmit}>
+          {/* College Selection */}
           <div className="mb-4">
-            <label
-              className="block text-gray-700 text-sm font-semibold mb-2"
-              htmlFor="college"
-            >
+            <label className="block text-gray-700 text-sm font-semibold mb-2" htmlFor="college">
               College / Institute
             </label>
-            <select
-              id="college"
-              className="block w-full px-4 py-2 border border-gray-300 rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400"
-            >
+            <select id="college" className="block w-full px-4 py-2 border border-gray-300 rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400" value={formData.college} onChange={handleChange}>
               <option>Select College</option>
-              {/* Dynamically populate colleges */}
               {colleges.map((college) => (
                 <option key={college} value={college}>
                   {college}
@@ -126,19 +149,13 @@ const SignUp = () => {
             </select>
           </div>
 
+          {/* Program Selection */}
           <div className="mb-4">
-            <label
-              className="block text-gray-700 text-sm font-semibold mb-2"
-              htmlFor="programme"
-            >
+            <label className="block text-gray-700 text-sm font-semibold mb-2" htmlFor="program">
               Select Programme
             </label>
-            <select
-              id="programme"
-              className="block w-full px-4 py-2 border border-gray-300 rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400"
-            >
+            <select id="program" className="block w-full px-4 py-2 border border-gray-300 rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400" value={formData.program} onChange={handleChange}>
               <option>Select Programme</option>
-              {/* Dynamically populate programs */}
               {programs.map((program) => (
                 <option key={program} value={program}>
                   {program}
@@ -147,34 +164,21 @@ const SignUp = () => {
             </select>
           </div>
 
+          {/* Name Input */}
           <div className="mb-4">
-            <label
-              className="block text-gray-700 text-sm font-semibold mb-2"
-              htmlFor="name"
-            >
+            <label className="block text-gray-700 text-sm font-semibold mb-2" htmlFor="name">
               Name
             </label>
-            <input
-              id="name"
-              type="text"
-              className="block w-full px-4 py-2 border border-gray-300 rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400"
-              placeholder="Enter your name"
-            />
+            <input id="name" type="text" className="block w-full px-4 py-2 border border-gray-300 rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400" placeholder="Enter your name" value={formData.name} onChange={handleChange} />
           </div>
 
+          {/* Year of Passing */}
           <div className="mb-4">
-            <label
-              className="block text-gray-700 text-sm font-semibold mb-2"
-              htmlFor="year"
-            >
+            <label className="block text-gray-700 text-sm font-semibold mb-2" htmlFor="year">
               Year of Passing
             </label>
-            <select
-              id="year"
-              className="block w-full px-4 py-2 border border-gray-300 rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400"
-            >
+            <select id="year" className="block w-full px-4 py-2 border border-gray-300 rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400" value={formData.year} onChange={handleChange}>
               <option>Select Year</option>
-              {/* Dynamically populate years */}
               {years.map((year) => (
                 <option key={year} value={year}>
                   {year}
@@ -183,60 +187,43 @@ const SignUp = () => {
             </select>
           </div>
 
+          {/* Enrollment Number Input */}
           <div className="mb-4">
-            <label
-              className="block text-gray-700 text-sm font-semibold mb-2"
-              htmlFor="enrollment"
-            >
+            <label className="block text-gray-700 text-sm font-semibold mb-2" htmlFor="enrollment">
               Enrollment Number
             </label>
-            <input
-              id="enrollment"
-              type="text"
-              className="block w-full px-4 py-2 border border-gray-300 rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400"
-              placeholder="Enter your enrollment number"
-            />
+            <input id="enrollment" type="text" className="block w-full px-4 py-2 border border-gray-300 rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400" placeholder="Enter your enrollment number" value={formData.enrollment} onChange={handleChange} />
           </div>
 
+          {/* Mobile Number Input */}
           <div className="mb-4">
-            <label
-              className="block text-gray-700 text-sm font-semibold mb-2"
-              htmlFor="mobile"
-            >
+            <label className="block text-gray-700 text-sm font-semibold mb-2" htmlFor="mobile">
               Enter Mobile
             </label>
-            <input
-              id="mobile"
-              type="text"
-              className="block w-full px-4 py-2 border border-gray-300 rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400"
-              placeholder="9999999999"
-            />
+            <input id="mobile" type="text" className="block w-full px-4 py-2 border border-gray-300 rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400" placeholder="9999999999" value={formData.mobile} onChange={handleChange} />
           </div>
 
+          {/* Email Input */}
           <div className="mb-4">
-            <label
-              className="block text-gray-700 text-sm font-semibold mb-2"
-              htmlFor="email"
-            >
+            <label className="block text-gray-700 text-sm font-semibold mb-2" htmlFor="email">
               Email
             </label>
-            <input
-              id="email"
-              type="email"
-              className="block w-full px-4 py-2 border border-gray-300 rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400"
-              placeholder="Enter your email"
-            />
+            <input id="email" type="email" className="block w-full px-4 py-2 border border-gray-300 rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400" placeholder="Enter your email" value={formData.email} onChange={handleChange} />
           </div>
 
-          <button
-            type="submit"
-            className="w-full bg-blue-500 text-white text-lg font-semibold py-2 rounded-md hover:bg-blue-600 transition duration-200"
-          >
+          {/* Password Input */}
+          <div className="mb-4">
+            <label className="block text-gray-700 text-sm font-semibold mb-2" htmlFor="password">
+              Create Password
+            </label>
+            <input id="password" type="password" className="block w-full px-4 py-2 border border-gray-300 rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400" placeholder="Create a password" value={formData.password} onChange={handleChange} />
+          </div>
+
+          <button type="submit" className="w-full bg-blue-500 text-white text-lg font-semibold py-2 rounded-md hover:bg-blue-600 transition duration-200">
             Register
           </button>
-
           <p className="text-center text-gray-500 mt-4">
-            <a href="/" className="text-blue-500 hover:underline">
+            <a href="/signin" className="text-blue-500 hover:underline">
               Back to Login
             </a>
           </p>
