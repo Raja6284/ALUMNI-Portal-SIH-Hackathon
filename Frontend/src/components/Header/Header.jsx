@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'; // If you're using React Router for nav
 
 function Header() {
     return (
-        <header className="fixed top-0 w-full bg-red-800">
+        <header className="fixed top-0 w-full bg-red-800 z-14">
             {/* Top Section: Sign In and Sign Up */}
             <div className="flex justify-end items-center h-8 px-4">
                 <Link to="/signin" className="text-white text-sm hover:underline mr-4">Sign In</Link>
