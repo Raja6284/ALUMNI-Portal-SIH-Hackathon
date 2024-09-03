@@ -15,8 +15,12 @@ import Stories from './Home/Stories';
 import DonationForm from './Donation/DonationForm';
 import TransactionPage from './Donation/TransactionPage';
 import DonationError from './Donation/DonationError';
+
 import StoryForm from './Home/StoryForm';
 import { StoryProvider } from './contexts/StoryContext';
+import ProfilePage from './Profile/ProfilePage';
+import Account from './Account/Account';
+
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -33,6 +37,40 @@ const router = createBrowserRouter(
       <Route path='jobportal' element={<JobProvider><JobPortal /></JobProvider>} />
       <Route path='jobpost' element={<JobProvider><JobPost /></JobProvider>} />
       <Route path='joblist' element={<JobProvider><JobList /></JobProvider>} />
+
+      <Route path='donation-error' element={< DonationError/>} />
+      <Route path='profile' element={< ProfilePage/>} />
+      <Route path='account' element={< Account/>} />
+      
+
+
+
+      {/* JobPortal and its related routes */}
+      <Route
+        path='jobportal'
+        element={
+          <JobProvider>
+            <JobPortal />
+          </JobProvider>
+        }
+      />
+      <Route
+        path='jobpost'
+        element={
+          <JobProvider>
+            <JobPost />
+          </JobProvider>
+        }
+      />
+      <Route
+        path='joblist'
+        element={
+          <JobProvider>
+            <JobList />
+          </JobProvider>
+        }
+      />
+
     </Route>
   )
 );
