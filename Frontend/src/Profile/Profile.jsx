@@ -1,23 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const Account = () => {
+const Profile = () => {
   const [profileData, setProfileData] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const storedData = JSON.parse(localStorage.getItem('userProfile'));
+    const storedData = JSON.parse(localStorage.getItem('currentUser')); // Fetch current user data
     if (storedData) {
       setProfileData(storedData);
     } else {
       navigate('/signin');
     }
   }, [navigate]);
-
+  
   const handleSignOut = () => {
-    localStorage.removeItem('userProfile');
+    localStorage.removeItem('currentUser'); // Clear current user data
     navigate('/signin');
   };
+  
 
   return (
     <div className="flex flex-col items-center justify-center h-screen bg-gray-100 p-8">
@@ -72,7 +73,7 @@ const Account = () => {
           </div>
           <div className="text-center">
             <button
-              onClick={() => navigate('/update-profile')}
+              onClick={() => navigate('/updateprofile')}
               className="bg-green-500 text-white px-6 py-2 rounded hover:bg-green-600 mr-4"
             >
               Edit Profile
@@ -92,4 +93,4 @@ const Account = () => {
   );
 };
 
-export default Account;
+export default Profile;

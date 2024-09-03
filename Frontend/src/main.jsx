@@ -16,8 +16,8 @@ import Stories from './Home/Stories';
 import DonationForm from './Donation/DonationForm';
 import TransactionPage from './Donation/TransactionPage';
 import DonationError from './Donation/DonationError';
-import ProfilePage from './Profile/ProfilePage';
-import Account from './Account/Account';
+import Profile from './Profile/Profile';
+import UpdateProfile from './Profile/updateprofile';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -31,8 +31,8 @@ const router = createBrowserRouter(
       <Route path='donation' element={<DonationForm />} />
       <Route path='transaction' element={<TransactionPage />} />
       <Route path='donation-error' element={< DonationError/>} />
-      <Route path='profile' element={< ProfilePage/>} />
-      <Route path='account' element={< Account/>} />
+      <Route path='profile' element={<Profile/>} />
+      <Route path='updateprofile' element={<UpdateProfile/>} />
       
 
 

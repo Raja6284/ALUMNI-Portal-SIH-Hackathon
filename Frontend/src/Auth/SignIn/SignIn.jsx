@@ -19,17 +19,15 @@ const SignIn = () => {
     e.preventDefault();
     const users = JSON.parse(localStorage.getItem("users")) || [];
     const user = users.find(user => user.email === formData.email && user.password === formData.password);
-
+  
     if (user) {
-      // Save the current user's email in localStorage
-      localStorage.setItem("currentUser", JSON.stringify(user.email));
-      
-      // Redirect to the account page
-      navigate('/profile');
+      localStorage.setItem("currentUser", JSON.stringify(user)); // Store current user's data
+      navigate('/profile'); // Redirect to the Profile page
     } else {
       alert('Invalid credentials');
     }
   };
+  
 
   return (
     <div className="bg-gray-100 font-sans min-h-screen flex items-center justify-center mt-20">

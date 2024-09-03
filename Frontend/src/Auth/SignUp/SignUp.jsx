@@ -116,16 +116,18 @@ const SignUp = () => {
     e.preventDefault();
     const users = JSON.parse(localStorage.getItem("users")) || [];
     const existingUser = users.find(user => user.email === formData.email);
-
+  
     if (existingUser) {
       alert("User with this email already exists. Please sign in.");
     } else {
       users.push(formData);
       localStorage.setItem("users", JSON.stringify(users));
-      alert("Registration successful! Please sign in.");
-      navigate('/signin');
+      localStorage.setItem("currentUser", JSON.stringify(formData)); // Store current user's data
+      alert("Registration successful!");
+      navigate('/profile'); // Redirect to the Profile page
     }
   };
+  
 
   return (
     <div className="bg-gray-100 font-sans min-h-screen flex items-center justify-center mt-20">
